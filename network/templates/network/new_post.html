@@ -1,0 +1,20 @@
+{% extends "network/layout.html" %}
+
+{% block body %}
+<div class="title-container">
+    <h3>New Post</h3>
+</div>
+
+<!-- New post form -->
+<div class="comment-section container mt-5">
+    <div class="row d-flex justify-content-center">
+        <form action="{% url 'new_post' %}" method="POST">
+        {% csrf_token %}
+            <div class="form-group">
+                <textarea class="form-control" name="text" placeholder="Type your post here..." rows="3" cols="50"></textarea>
+            </div>
+             <input class="btn btn-primary" type="submit" value="Post">
+        </form>
+    </div>
+</div>
+{% endblock %}

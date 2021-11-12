@@ -1,0 +1,34 @@
+
+/* Style the navigation manu */
+.page-nav-container {
+    margin-top:20px;
+}
+
+/* Style the title of the page */
+.title-container {
+    margin:20px;
+}
+
+/* Style the div that contains the login and register forms */
+.form-container {
+   margin:20px;
+   padding:10px;
+}
+
+/* Style the button container */
+.follow-button-container {
+    margin-top:10px;
+}
+
+/* Style the like icon */
+.image {
+    padding:5px;
+}
+
+/* Style the like button */
+.like-button {
+    background-color:white;
+    border:none;
+    margin-right:5px;
+    box-shadow: rgba(0, 0, 0, 0.05) 0px 0px 0px 1px;
+}

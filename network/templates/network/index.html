@@ -1,0 +1,91 @@
+{% extends "network/layout.html" %}
+
+{% block body %}
+<div class="title-container">
+    <h3>All Posts</h3>
+</div>
+
+<!-- Single post container -->
+
+<div class="comment-section container mt-5">
+  <div class="row d-flex justify-content-center">
+    <div class="col-md-8">
+      {% for post in page_object %}
+      <div class="card p-3 mt-2">
+        <div><strong>{{post.username}}</strong></div>
+
+        <!-- Edit button -->
+        {% if user.id == post.user.id %}
+        <div id="e{{post.id}}" >
+        <a class="btn btn-primary" onclick="show_edit({{post.id}})">Edit</a>
+        </div>
+        {% endif %}
+
+        <!-- Edit post form -->
+        <div class="row d-flex justify-content-center" id="edit-post">
+         <form id="f{{post.id}}" style="display:none;">
+            <div class="form-group">
+                <textarea class="form-control" name="text" id="p{{post.id}}" placeholder="{{post.text}}" rows="3" cols="50"></textarea>
+                <input type="hidden" id="postId" value="{{post.id}}">
+            </div>
+             <button class="btn btn-primary" id="save" type="submit" onclick="save_post({{post.id}})">Save</button>
+        </form>
+       </div>
+
+       <div id="t{{post.id}}">{{post.text}}</div>
+
+        <div><i>{{post.time_stamp}}</i></div>
+
+        <!-- Like and Dislike buttons -->
+        {% if user.is_authenticated %}
+        <div>
+          {% if likedPosts %}
+             {% if post.id in likedPosts %}
+             <button class="like-button" id="l{{post.id}}" onclick="like({{post.id}})" style="display:none;"><span>Like</span><span class="image"><img src="static/images/heart.jpg"/></span></button>
+             <button class="like-button" id="dl{{post.id}}" onclick="dislike({{post.id}})"><span>Dislike</span><span class="image"><img src="static/images/dislike_heart.jpg"/></span></button>
+             {% else %}
+             <button class="like-button" id="l{{post.id}}" onclick="like({{post.id}})"><span>Like</span><span class="image"><img src="static/images/heart.jpg"/></span></button>
+             <button class="like-button" id="dl{{post.id}}" onclick="dislike({{post.id}})" style="display:none;"><span>Dislike</span><span class="image"><img src="static/images/dislike_heart.jpg"/></span></button>
+             {% endif %}
+          {% else %}
+             <button class="like-button" id="l{{post.id}}" onclick="like({{post.id}})"><span>Like</span><span class="image"><img src="static/images/heart.jpg"/></span></button>
+             <button class="like-button" id="dl{{post.id}}" onclick="dislike({{post.id}})" style="display:none;"><span>Dislike</span><span class="image"><img src="static/images/dislike_heart.jpg"/></span></button>
+          {% endif %}
+        </div>
+        {% endif %}
+        <div><span>Likes: </span><span id="tl{{post.id}}">{{post.likes}}</span></div>
+
+        <div>Comment</div>
+       </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+<!-- Pagination -->
+
+<div class="page-nav-container">
+<nav aria-label="Page navigation example">
+  <ul class="pagination justify-content-center">
+    {% if page_object.has_previous %}
+    <li class="page-item">
+      <a class="page-link" href="?page={{page_object.previous_page_number}}" tabindex="-1">Previous</a>
+    </li>
+    {% else %}
+    <li class="page-item disabled">
+      <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
+    </li>
+    {% endif %}
+    {% if page_object.has_next %}
+    <li>
+      <a class="page-link" href="?page={{page_object.next_page_number}}">Next</a>
+    </li>
+    {% else %}
+    <li class="page-item disabled">
+      <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Next</a>
+    </li>
+    {% endif %}
+  </ul>
+</nav>
+</div>
+{% endblock %}
